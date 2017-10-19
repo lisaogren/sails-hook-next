@@ -19,6 +19,6 @@ Coming as soon as I found out how to implement this.
 
 What we need:
 
-* [ ] Instantiate a Next.js app and expose it as `sails.next`
-* [ ] Global Next.js handler for SSR
-* [ ] Replicate Next.js route aliases, overriding global handler, for pretty urls
+* [x] Instantiate a Next.js app and expose it as `sails.next`
+* [ ] Global Next.js handler exposing `pages` special folder for SSR
+* [ ] Replicate Next.js route aliases, overriding global handler, for pretty urls while keeping SSR
