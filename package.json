@@ -1,0 +1,39 @@
+{
+  "name": "sails-hook-next",
+  "version": "1.0.0",
+  "description": "Next.js hook for Sails",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RasCarlito/sails-hook-next.git"
+  },
+  "keywords": [
+    "next.js",
+    "hook",
+    "sails",
+    "react",
+    "ssr",
+    "api"
+  ],
+  "author": "RasCarlito",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RasCarlito/sails-hook-next/issues"
+  },
+  "homepage": "https://github.com/RasCarlito/sails-hook-next#readme",
+  "dependencies": {
+    "next": "^4.1.1"
+  },
+  "devDependencies": {
+    "jest": "^21.2.1",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "sails": "^0.12.14"
+  },
+  "sails": {
+    "isHook": true
+  }
+}
