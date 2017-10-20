@@ -21,7 +21,20 @@ npm install --save sails-hook-next react react-dom next
 
 ## Usage
 
-The only necessary configuration is that all your sails API routes are prefixed with `/api` (will be configurable soon).
+Create a `pages` folder at the root of your project to store your Next.js pages. Example:
+
+```js
+// pages/index.js
+export default () => (
+  <div>
+    <h1>Hello Next.js</h1>
+  </div>
+)
+```
+
+*For more info see the [Next.js documentation](https://github.com/zeit/next.js) or the awesome [learnnextjs.com](https://learnnextjs.com/) tutorial*
+
+The only necessary Sails configuration is that all your API routes are prefixed with `/api` (will be configurable soon).
 This can be achieved for blueprints by setting the `prefix` key to `/api` in your `config/blueprints.js` file.
 
 Then just lift your Sails application to run in development mode:
