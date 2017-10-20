@@ -2,23 +2,46 @@
 
 Next.js Hook for SailsJS
 
-Currently just a work in progress.
-
 The idea is to completely integrate the Next.js framework with a Sailsjs API
 so that we can have the power of a server-rendered React app and an awesome REST API.
 
 ## Installation
 
+You can install the hook using npm. You also need to chip in its dependencies.
+
 ```
-npm install --save sails-hook-next
+npm install --save sails-hook-next sails react react-dom next
 ```
 
 ## Usage
 
-Coming as soon as I found out how to implement this.
+The only necessary configuration is that all your sails API routes are prefixed with `/api`.
+This can be achieved for blueprints by setting the `prefix` key in your `config/blueprints.js` file.
+
+Then just lift your Sails application to run in development mode:
+
+```
+sails lift
+```
+
+### Production
+
+> TODO: Find how to build and run in production mode
+
+### Interactions between Next.js and Sails
+
+* The Next.js app instance can be accessed anywhere with `sails.next`.
+* The Next.js request handler for SSR is attached to `sails.handle`.
+
+## Roadmap
 
 What we need:
 
 * [x] Instantiate a Next.js app and expose it as `sails.next`
-* [ ] Global Next.js handler exposing `pages` special folder for SSR
+* [x] Global Next.js handler exposing `pages` special folder for SSR
+* [ ] Create config options for the hook to configure the global Next.js handler (override `/api` prefix)
 * [ ] Replicate Next.js route aliases, overriding global handler, for pretty urls while keeping SSR
+
+Other stuff todo:
+
+* [ ] Post on this [Next.js issue](https://github.com/zeit/next.js/issues/2394)

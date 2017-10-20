@@ -2,7 +2,7 @@
   "name": "sails-hook-next",
   "version": "1.0.0",
   "description": "Next.js hook for Sails",
-  "main": "index.js",
+  "main": "api/hooks/next/index.js",
   "scripts": {
     "test": "jest"
   },
@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/RasCarlito/sails-hook-next#readme",
   "dependencies": {
+    "marlinspike": "^1.0.0",
     "next": "^4.1.1"
   },
   "devDependencies": {
