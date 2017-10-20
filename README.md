@@ -13,7 +13,7 @@ Initialize a Sails project with no frontend:
 sails new my-project --no-frontend && cd my-project
 ```
 
-Then install the hook using npm. You also need to chip in its dependencies.
+Then install the hook using npm. You also need to ship in its dependencies.
 
 ```
 npm install --save sails-hook-next react react-dom next
