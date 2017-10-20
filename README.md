@@ -7,16 +7,22 @@ so that we can have the power of a server-rendered React app and an awesome REST
 
 ## Installation
 
-You can install the hook using npm. You also need to chip in its dependencies.
+Initialize a Sails project with no frontend:
 
 ```
-npm install --save sails-hook-next sails react react-dom next
+sails new my-project --no-frontend && cd my-project
+```
+
+Then install the hook using npm. You also need to chip in its dependencies.
+
+```
+npm install --save sails-hook-next react react-dom next
 ```
 
 ## Usage
 
-The only necessary configuration is that all your sails API routes are prefixed with `/api`.
-This can be achieved for blueprints by setting the `prefix` key in your `config/blueprints.js` file.
+The only necessary configuration is that all your sails API routes are prefixed with `/api` (will be configurable soon).
+This can be achieved for blueprints by setting the `prefix` key to `/api` in your `config/blueprints.js` file.
 
 Then just lift your Sails application to run in development mode:
 
