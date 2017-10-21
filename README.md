@@ -34,13 +34,43 @@ export default () => (
 
 *For more info see the [Next.js documentation](https://github.com/zeit/next.js) or the awesome [learnnextjs.com](https://learnnextjs.com/) tutorial*
 
-The only necessary Sails configuration is that all your API routes are prefixed with `/api` (will be configurable soon).
+The only necessary Sails configuration is that all your API routes are prefixed with `/api`.
 This can be achieved for blueprints by setting the `prefix` key to `/api` in your `config/blueprints.js` file.
 
 Then just lift your Sails application to run in development mode:
 
 ```
 sails lift
+```
+
+### Hook configuration
+
+You can override hook configuration by creating a `config/next.js` file in your Sails application.
+
+Default configuration:
+
+```js
+module.exports.next = {
+  // Sails integration options
+  api: {
+    // Prefix for all Sails API routes
+    prefix: '/api',
+    // Controller used for Next.js SSR
+    controller: 'NextController.index'
+  },
+
+  // Next.js instance options. Passed to `next()`.
+  server: {
+    // Next.js root directory
+    dir: '.',
+    // Dev mode. Is overridden by `process.env.NODE_ENV !== 'production'`
+    dev: false,
+    // Hide error messages
+    quiet: false,
+    // Equivalent to a `next.config.js` file
+    conf: {}
+  },
+}
 ```
 
 ### Production

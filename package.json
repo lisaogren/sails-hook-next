@@ -25,6 +25,8 @@
   },
   "homepage": "https://github.com/RasCarlito/sails-hook-next#readme",
   "dependencies": {
+    "chalk": "^2.2.0",
+    "lodash": "^4.17.4",
     "marlinspike": "^1.0.0",
     "next": "^4.1.1"
   },
