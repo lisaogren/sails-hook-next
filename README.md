@@ -88,5 +88,5 @@ What we need:
 
 * [x] Instantiate a Next.js app and expose it as `sails.next`
 * [x] Global Next.js handler exposing `pages` special folder for SSR
-* [ ] Create config options for the hook to configure the global Next.js handler (override `/api` prefix)
+* [x] Create config options for the hook to configure the global Next.js handler (override `/api` prefix)
 * [ ] Replicate Next.js route aliases, overriding global handler, for pretty urls while keeping SSR. Probably use [next-routes](https://github.com/fridays/next-routes)

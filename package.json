@@ -1,6 +1,6 @@
 {
   "name": "sails-hook-next",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Next.js hook for Sails",
   "main": "api/hooks/next/index.js",
   "scripts": {
