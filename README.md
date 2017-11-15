@@ -75,7 +75,14 @@ module.exports.next = {
 
 ### Production
 
-> TODO: Find how to build and run in production mode
+To run in production mode you need to build your next application first using `next build`.
+If `next` is not installed globally you can run it using `npx next build`.
+
+This will generate the production version of your `next` app in the `.next` folder.
+
+Then run Sails in production mode using either `sails lift --prod` or `NODE_ENV=production node app.js`.
+
+For more info see the [Next.js](https://github.com/zeit/next.js/#production-deployment) and [Sails](https://sailsjs.com/documentation/concepts/deployment) deployment documentation.
 
 ### Interactions between Next.js and Sails
 
@@ -90,3 +97,10 @@ What we need:
 * [x] Global Next.js handler exposing `pages` special folder for SSR
 * [x] Create config options for the hook to configure the global Next.js handler (override `/api` prefix)
 * [ ] Replicate Next.js route aliases, overriding global handler, for pretty urls while keeping SSR. Probably use [next-routes](https://github.com/fridays/next-routes)
+
+## sails-hook-next in the wild
+
+I'm currently working on a small web app using Next+Sails called [next-time-tracker](https://github.com/RasCarlito/next-time-tracker)
+which is a good example of a real implementation of this hook.
+
+If you have an example don't hesitate to add it here by submitting a pull request.
