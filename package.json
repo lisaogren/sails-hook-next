@@ -2,9 +2,11 @@
   "name": "sails-hook-next",
   "version": "1.1.0",
   "description": "Next.js hook for Sails",
-  "main": "api/hooks/next/index.js",
+  "main": "lib/api/hooks/next/index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest --forceExit",
+    "compile": "babel src --out-dir lib",
+    "install": "npm run compile"
   },
   "repository": {
     "type": "git",
@@ -27,14 +29,20 @@
   "dependencies": {
     "chalk": "^2.2.0",
     "lodash": "^4.17.4",
-    "marlinspike": "^1.0.0",
     "next": "^4.1.1"
   },
   "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-jest": "^21.2.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
     "jest": "^21.2.1",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
-    "sails": "^0.12.14"
+    "sails": "1.0.0-41"
+  },
+  "jest": {
+    "testEnvironment": "node"
   },
   "sails": {
     "isHook": true
