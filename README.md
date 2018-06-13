@@ -54,9 +54,7 @@ module.exports.next = {
   // Sails integration options
   api: {
     // Prefix for all Sails API routes
-    prefix: '/api',
-    // Controller used for Next.js SSR
-    controller: 'NextController.index'
+    prefix: '/api'
   },
 
   // Next.js instance options. Passed to `next()`.
@@ -86,21 +84,20 @@ For more info see the [Next.js](https://github.com/zeit/next.js/#production-depl
 
 ### Interactions between Next.js and Sails
 
-* The Next.js app instance can be accessed anywhere with `sails.next`.
-* The Next.js request handler for SSR is attached to `sails.handle`.
+* The Next.js app instance can be accessed anywhere with `sails.config.next.bridge`.
+* The Next.js request handler for SSR is attached to `sails.config.next.handle`.
 
 ## Roadmap
 
 What we need:
 
-* [x] Instantiate a Next.js app and expose it as `sails.next`
+* [x] Instantiate a Next.js app and expose it as `sails.config.next.bridge`
 * [x] Global Next.js handler exposing `pages` special folder for SSR
 * [x] Create config options for the hook to configure the global Next.js handler (override `/api` prefix)
 * [ ] Replicate Next.js route aliases, overriding global handler, for pretty urls while keeping SSR. Probably use [next-routes](https://github.com/fridays/next-routes)
 
 ## sails-hook-next in the wild
 
-I'm currently working on a small web app using Next+Sails called [next-time-tracker](https://github.com/RasCarlito/next-time-tracker)
-which is a good example of a real implementation of this hook.
+Don't have a real example using the latest version of `sails-hook-next` yet.
 
 If you have an example don't hesitate to add it here by submitting a pull request.

@@ -1,7 +1,6 @@
-export default {
-
+module.exports = {
   api: {
-    prefix: '/api',
+    prefix: '/api'
   },
 
   server: {
@@ -9,6 +8,5 @@ export default {
     dev: false,
     quiet: false,
     conf: {}
-  },
-
-};
+  }
+}

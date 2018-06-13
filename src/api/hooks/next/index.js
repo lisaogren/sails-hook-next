@@ -1,26 +1,26 @@
-const chalk = require('chalk');
-const extend = require('extend');
-const next = require('next');
+const chalk = require('chalk')
+const next = require('next')
 
-import defaultConfig from '../../../config/next.js';
+const defaultConfig = require('../../../config/next')
 
 module.exports = (sails) => {
   return {
     defaults: {
-      __configKey__: defaultConfig,
+      __configKey__: defaultConfig
     },
 
-    configure() {
-      const dev = process.env.NODE_ENV !== 'production';
+    configure () {
+      const dev = process.env.NODE_ENV !== 'production'
 
       // Retrieve configuration
-      const { server, api } = sails.config[this.configKey];
-      const isBlueprintsSimilar = api.prefix !== sails.config.blueprints.prefix;
+      const { server, api } = sails.config[this.configKey]
+      // todo: Probably check if blueprints is enabled before getting the prefix
+      const isBlueprintsSimilar = api.prefix !== sails.config.blueprints.prefix
 
       if (isBlueprintsSimilar) {
         log('blueprints.prefix !== next.api.prefix. ' +
             'They need to be the same for API calls to work. ' +
-            `Expected "${api.prefix}"`);
+            `Expected "${api.prefix}"`)
       }
 
       // Create special route to handle Next.js SSR
@@ -29,48 +29,44 @@ module.exports = (sails) => {
           skipAssets: false,
 
           target: (req, res) => {
-            sails.config[this.configKey].handle(req, res);
-          },
-        });
-      });
+            sails.config[this.configKey].handle(req, res)
+          }
+        })
+      })
 
       // Create a bridge to Next.js app instance
-      const nextBridge = next({ ...server, dev});
+      const nextBridge = next({ ...server, dev })
 
       // Retrieve request handler
-      sails.config[this.configKey].handle = nextBridge.getRequestHandler();
+      sails.config[this.configKey].handle = nextBridge.getRequestHandler()
 
-      sails.config[this.configKey].bridge = nextBridge;
+      sails.config[this.configKey].bridge = nextBridge
     },
 
-    initialize(done) {
+    initialize (done) {
       // Prepare Next.js app
       sails.config[this.configKey].bridge
         .prepare()
         .then(done)
-        .catch(ex => error(ex.stack));
+        .catch(ex => error(ex.stack))
     }
-  };
-
+  }
 
   function title () {
-    return `${chalk.cyan('sails-hook-next')}:`;
+    return `${chalk.cyan('sails-hook-next')}:`
   }
 
   function log (...args) {
-    sails.log.debug(title(), ...args);
+    sails.log.debug(title(), ...args)
   }
 
   function error (...args) {
-    sails.log.error(title(), ...args);
+    sails.log.error(title(), ...args)
   }
 
   function toRegex (route) {
-    if (route.indexOf('/') === 0) {
-      route = route.substr(1);
-    }
+    if (route.indexOf('/') === 0) route = route.substr(1)
 
-    return `r|^/(?!${route}).*$|`;
+    return `r|^/(?!${route}).*$|`
   }
-
-};
+}
