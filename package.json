@@ -27,11 +27,7 @@
   "homepage": "https://github.com/RasCarlito/sails-hook-next#readme",
   "dependencies": {
     "chalk": "^2.2.0",
-    "lodash": "^4.17.4",
-    "next": "^6.0.3",
-    "react": "^16.4.0",
-    "react-dom": "^16.4.0",
-    "sails": "^1.0.2"
+    "lodash": "^4.17.4"
   },
   "devDependencies": {
     "jest": "^21.2.1",
