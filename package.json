@@ -34,6 +34,12 @@
     "snazzy": "^7.1.1",
     "standard": "^11.0.1"
   },
+  "peerDependencies": {
+    "next": "^6.0.3",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0",
+    "sails": "^1.0.2"
+  },
   "jest": {
     "testEnvironment": "node"
   },
