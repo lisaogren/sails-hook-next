@@ -24,31 +24,36 @@ module.exports = (sails) => {
       }
 
       // Create special route to handle Next.js SSR
-      sails.on('router:before', () => {
+      sails.on('router:after', () => {
         sails.router.bind(toRegex(api.prefix), {
           skipAssets: false,
 
           target: (req, res) => {
-            sails.config[this.configKey].handle(req, res)
+            this.config().handle(req, res)
           }
         })
       })
 
       // Create a bridge to Next.js app instance
-      const nextBridge = next({ ...server, dev })
+      const nextApp = next({ ...server, dev })
 
       // Retrieve request handler
-      sails.config[this.configKey].handle = nextBridge.getRequestHandler()
+      this.config().handle = nextApp.getRequestHandler()
 
-      sails.config[this.configKey].bridge = nextBridge
+      this.config().app = nextApp
     },
 
-    initialize (done) {
+    config () {
+      return sails.config[this.configKey]
+    },
+
+    async initialize (done) {
       // Prepare Next.js app
-      sails.config[this.configKey].bridge
-        .prepare()
-        .then(done)
-        .catch(ex => error(ex.stack))
+      try {
+        this.config().app.preprare()
+      } catch (ex) {
+        error(ex.stack)
+      }
     }
   }
 
