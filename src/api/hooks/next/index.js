@@ -29,7 +29,7 @@ module.exports = (sails) => {
           skipAssets: false,
 
           target: (req, res) => {
-            this.config().handle(req, res)
+            sails.config[this.configKey].handle(req, res)
           }
         })
       })
@@ -38,19 +38,15 @@ module.exports = (sails) => {
       const nextApp = next({ ...server, dev })
 
       // Retrieve request handler
-      this.config().handle = nextApp.getRequestHandler()
+      sails.config[this.configKey].handle = nextApp.getRequestHandler()
 
-      this.config().app = nextApp
-    },
-
-    config () {
-      return sails.config[this.configKey]
+      sails.config[this.configKey].app = nextApp
     },
 
     async initialize (done) {
       // Prepare Next.js app
       try {
-        this.config().app.preprare()
+        sails.config[this.configKey].app.preprare()
       } catch (ex) {
         error(ex.stack)
       }
