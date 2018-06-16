@@ -80,20 +80,14 @@ Define the Next.js blog page which receives the parameters through the `query` p
 
 ```js
 // pages/blog.js
-import { Component } from 'react'
+const BlogPage = ({ articleId }) => (
+  <div>
+    <h1>My {articleId} blog post</h1>
+  </div>
+)
 
-class BlogPage extends Component {
-  static getInitialProps ({ query: { articleId } }) {
-    return { articleId }
-  }
-
-  render () {
-    return (
-      <div>
-        <h1>My {this.props.articleId} blog post</h1>
-      </div>
-    )
-  }
+BlogPage.getInitialProps = ({ query: { articleId } }) => {
+  return { articleId }
 }
 
 export default BlogPage
@@ -105,15 +99,25 @@ Linking to the blog page using the Next.js `Link` component:
 // pages/index.js
 import Link from 'next/link'
 
-export default () => (
-  <ul>
-    <li>
-      <Link href='/blog?id=first' as='/blog/first'>
-        <a>My first blog</a>
-      </Link>
-    </li>
-  </ul>
-)
+export default () => {
+  return (
+    <div>
+      <h1>Home</h1>
+      <ul>
+        <li>
+          <Link href='/blog?articleId=first' as='/blog/first'>
+            <a>My first blog</a>
+          </Link>
+        </li>
+        <li>
+          <Link href='/blog?articleId=second' as='/blog/second'>
+            <a>My second blog</a>
+          </Link>
+        </li>
+      </ul>
+    </div>
+  )
+}
 ```
 
 You can find more information in the [Next.js custom routes](https://github.com/zeit/next.js/#custom-server-and-routing) documentation and the [Sails url-slugs routes](https://sailsjs.com/documentation/concepts/routes/url-slugs) documentation.
