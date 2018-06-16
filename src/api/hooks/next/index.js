@@ -46,7 +46,8 @@ module.exports = (sails) => {
     async initialize (done) {
       // Prepare Next.js app
       try {
-        sails.config[this.configKey].app.preprare()
+        await sails.config[this.configKey].app.prepare()
+        done()
       } catch (ex) {
         error(ex.stack)
       }
