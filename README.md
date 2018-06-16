@@ -1,8 +1,8 @@
 # sails-hook-next
 
-Next.js Hook for SailsJS
+Next.js Hook for Sails
 
-The idea is to completely integrate the Next.js framework with a Sailsjs API
+The idea is to completely integrate the Next.js framework with a Sails API
 so that we can have the power of a server-rendered React app and an awesome REST API.
 
 ## Installation
@@ -32,6 +32,14 @@ export default () => (
 )
 ```
 
+A custom `.babelrc` configuration is necessary for Next.js components.
+
+```js
+{
+  "presets": ["next/babel"]
+}
+```
+
 *For more info see the [Next.js documentation](https://github.com/zeit/next.js) or the awesome [learnnextjs.com](https://learnnextjs.com/) tutorial*
 
 The only necessary Sails configuration is that all your API routes are prefixed with `/api`.
@@ -42,6 +50,77 @@ Then just lift your Sails application to run in development mode:
 ```
 sails lift
 ```
+
+### Custom routes
+
+To handle custom routes we need to configure a Sails controller to render the correct Next.js page.
+
+Define a route pointing to the controller:
+
+```js
+// config/routes.js
+module.exports = {
+  'get /blog/:articleId': 'BlogController.article'
+}
+```
+
+Define the controller which calls `sails.config.next.app.render()` method passing the route parameters along:
+
+```js
+// api/controllers/BlogController.js
+module.exports = {
+  article (req, res) {
+    const articleId = req.param('articleId')
+    sails.config.next.app.render(req, res, '/blog', { articleId })
+  }
+}
+```
+
+Define the Next.js blog page which receives the parameters through the `query` parameter in the `getInitialProps()` method:
+
+```js
+// pages/blog.js
+const BlogPage = ({ articleId }) => (
+  <div>
+    <h1>My {articleId} blog post</h1>
+  </div>
+)
+
+BlogPage.getInitialProps = ({ query: { articleId } }) => {
+  return { articleId }
+}
+
+export default BlogPage
+```
+
+Linking to the blog page using the Next.js `Link` component:
+
+```js
+// pages/index.js
+import Link from 'next/link'
+
+export default () => {
+  return (
+    <div>
+      <h1>Home</h1>
+      <ul>
+        <li>
+          <Link href='/blog?articleId=first' as='/blog/first'>
+            <a>My first blog</a>
+          </Link>
+        </li>
+        <li>
+          <Link href='/blog?articleId=second' as='/blog/second'>
+            <a>My second blog</a>
+          </Link>
+        </li>
+      </ul>
+    </div>
+  )
+}
+```
+
+You can find more information in the [Next.js custom routes](https://github.com/zeit/next.js/#custom-server-and-routing) documentation and the [Sails url-slugs routes](https://sailsjs.com/documentation/concepts/routes/url-slugs) documentation.
 
 ### Hook configuration
 
@@ -54,9 +133,7 @@ module.exports.next = {
   // Sails integration options
   api: {
     // Prefix for all Sails API routes
-    prefix: '/api',
-    // Controller used for Next.js SSR
-    controller: 'NextController.index'
+    prefix: '/api'
   },
 
   // Next.js instance options. Passed to `next()`.
@@ -69,38 +146,35 @@ module.exports.next = {
     quiet: false,
     // Equivalent to a `next.config.js` file
     conf: {}
-  },
+  }
 }
 ```
 
 ### Production
 
-To run in production mode you need to build your next application first using `next build`.
-If `next` is not installed globally you can run it using `npx next build`.
+To run in production mode you need to build your Next.js application
 
-This will generate the production version of your `next` app in the `.next` folder.
+```
+next build
+```
 
-Then run Sails in production mode using either `sails lift --prod` or `NODE_ENV=production node app.js`.
+_If `next` is not installed globally you can run it using `npx next build`._
 
-For more info see the [Next.js](https://github.com/zeit/next.js/#production-deployment) and [Sails](https://sailsjs.com/documentation/concepts/deployment) deployment documentation.
+Then run Sails in production mode using
+
+```
+NODE_ENV=production node app.js
+```
+
+For more information see the [Next.js](https://github.com/zeit/next.js/#production-deployment) and [Sails](https://sailsjs.com/documentation/concepts/deployment) deployment documentation.
 
 ### Interactions between Next.js and Sails
 
-* The Next.js app instance can be accessed anywhere with `sails.next`.
-* The Next.js request handler for SSR is attached to `sails.handle`.
-
-## Roadmap
-
-What we need:
-
-* [x] Instantiate a Next.js app and expose it as `sails.next`
-* [x] Global Next.js handler exposing `pages` special folder for SSR
-* [x] Create config options for the hook to configure the global Next.js handler (override `/api` prefix)
-* [ ] Replicate Next.js route aliases, overriding global handler, for pretty urls while keeping SSR. Probably use [next-routes](https://github.com/fridays/next-routes)
+* The Next.js app instance can be accessed anywhere with `sails.config.next.app`.
+* The Next.js request handler for SSR is attached to `sails.config.next.handle`.
 
 ## sails-hook-next in the wild
 
-I'm currently working on a small web app using Next+Sails called [next-time-tracker](https://github.com/RasCarlito/next-time-tracker)
-which is a good example of a real implementation of this hook.
+Don't have a real example using the latest version of `sails-hook-next` yet.
 
 If you have an example don't hesitate to add it here by submitting a pull request.
