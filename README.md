@@ -19,6 +19,17 @@ Then install the hook using npm. You also need to include its dependencies.
 npm install --save sails-hook-next react react-dom next
 ```
 
+## Compatibility
+
+The v2.0 of `sails-hook-next` is only compatible with latest major releases of Next.js and Sails.
+
+| Framework | Version |
+| --- | --- |
+| Next.js | >= 6.0.0 |
+| Sails | >= 1.0.0 |
+
+For compatibility with Next.js <= 4.x.x and Sails 0.12.x [checkout the v1.1.0](https://github.com/RasCarlito/sails-hook-next/tree/1.1.0) of the hook.
+
 ## Usage
 
 Create a `pages` folder at the root of your project to store your Next.js pages. Example:
@@ -60,6 +71,8 @@ Define a route pointing to the controller:
 ```js
 // config/routes.js
 module.exports = {
+  // Listen to GET requests to the /blog/:articleId pattern
+  // and route requests to the `BlogController.artcile()` method
   'get /blog/:articleId': 'BlogController.article'
 }
 ```
@@ -70,8 +83,13 @@ Define the controller which calls `sails.config.next.app.render()` method passin
 // api/controllers/BlogController.js
 module.exports = {
   article (req, res) {
-    const articleId = req.param('articleId')
-    sails.config.next.app.render(req, res, '/blog', { articleId })
+    // Extract `params` which contains the `articleId` parsed from the URL path
+    // and `query` parameters parsed as an object
+    const { params, query } = req
+
+    // Render the Next.js `pages/blog.js` component passing the `query` and `params`
+    // merged together so that the `query` can still get accessed by the `getInitialProps()` method.
+    sails.config.next.app.render(req, res, '/blog', { ...params, ...query })
   }
 }
 ```
@@ -80,12 +98,16 @@ Define the Next.js blog page which receives the parameters through the `query` p
 
 ```js
 // pages/blog.js
+
+// React stateless component receiving the `articleId` through the `props`
 const BlogPage = ({ articleId }) => (
   <div>
     <h1>My {articleId} blog post</h1>
   </div>
 )
 
+// Next.js `getInitialProps` receiving the `articleId` through the `query` parameters
+// and returning it for the component to get it through the `props`
 BlogPage.getInitialProps = ({ query: { articleId } }) => {
   return { articleId }
 }
@@ -105,11 +127,16 @@ export default () => {
       <h1>Home</h1>
       <ul>
         <li>
+          {/*
+            Link to a first blog post passing the `articleId` as query parameter
+            and aliasing to the url slug `/blog/first`
+          */}
           <Link href='/blog?articleId=first' as='/blog/first'>
             <a>My first blog</a>
           </Link>
         </li>
         <li>
+          {/* Link to another blog post */}
           <Link href='/blog?articleId=second' as='/blog/second'>
             <a>My second blog</a>
           </Link>
